@@ -1,0 +1,212 @@
+Searching 25595 files for "prize"
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Models/Enterprise.php:
+    5  use Illuminate\Database\Eloquent\Model;
+    6
+    7: class Enterprise extends Model
+    8  {
+    9      //
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Models/Services.php:
+   12          'size',
+   13          'title',
+   14:         'price',
+   15          'category',
+   16          'description',
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Models/UserInformation.php:
+   16          'birthdate',
+   17          'user_id',
+   18:         'enterprize_id',
+   19          'branch_id',
+   20          'points',
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Repositories/EnterpriseRepository.php:
+    4  namespace App\Repositories;
+    5  use App\Repositories\AbstractRepository as BaseRepository;
+    6: use App\Models\Enterprise;
+    7
+    8: class EnterpriseRepository extends BaseRepository
+    9  {
+   10      protected function modelClass()
+   11      {
+   12:         return new Enterprise;
+   13      }
+   14
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/EnterpriseServices.php:
+    6  use Illuminate\Support\Facades\Auth;
+    7  use Illuminate\Support\Facades\DB;
+    8: use App\Repositories\EnterpriseRepository;
+    9  use App\Services\AbstractServices;
+   10
+   11: class EnterpriseServices extends AbstractServices
+   12  {
+   13
+   14      private $authUser;
+   15:     private $enterprize;
+   16:     public function __construct(EnterpriseRepository $enterprizeRepository)
+   17      {
+   18          try {
+   ..
+   21              \Log::info('No Auth User');
+   22          }
+   23:         $this->enterprize = $enterprizeRepository;
+   24      }
+   25
+   26
+   27      /**
+   28:      *  Create Enterprise
+   29       */
+   30:     Public function createEnterprise($request){
+   31          DB::begintransaction();
+   32          try{
+   ..
+   36                  'contact_person' => $request->get('contact_person',null)
+   37              ];
+   38:             $this->enterprize->create($data);
+   39          }
+   40          catch(Exception $e){
+   ..
+   48
+   49      /**
+   50:      * Update Enterprise
+   51       */
+   52:     public function updateEnterprise($request,$id){
+   53
+   54          DB::beginTransaction();
+   ..
+   59                  'contact_person' => $request->get('contact_person')
+   60              ];
+   61:             $this->enterprize->update($data,$id);
+   62          } catch (Exception $e) {
+   63              DB::rollback();
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/JoborderServices.php:
+    6  use Illuminate\Support\Facades\Auth;
+    7  use Illuminate\Support\Facades\DB;
+    8: use App\Repositories\EnterpriseRepository;
+    9  use App\Services\AbstractServices;
+   10
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/PartnerOperatorsServices.php:
+   27              'size' => $request->size,
+   28              'title' => $request->title,
+   29:             'price' => $request->price,
+   30              'category' => $request->category,
+   31              'description' => $request->description
+   ..
+   65              'size' => $request->size,
+   66              'title' => $request->title,
+   67:             'price' => $request->price,
+   68              'category' => $request->category,
+   69              'description' => $request->description
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/ProductsServices.php:
+   27              'size' => $request->size,
+   28              'title' => $request->title,
+   29:             'price' => $request->price,
+   30              'category' => $request->category,
+   31              'description' => $request->description
+   ..
+   65              'size' => $request->size,
+   66              'title' => $request->title,
+   67:             'price' => $request->price,
+   68              'category' => $request->category,
+   69              'description' => $request->description
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/ServicesServices.php:
+   27              'size' => $request->size,
+   28              'title' => $request->title,
+   29:             'price' => $request->price,
+   30              'category' => $request->category,
+   31              'description' => $request->description
+   ..
+   66              'size' => $request->size,
+   67              'title' => $request->title,
+   68:             'price' => $request->price,
+   69              'category' => $request->category,
+   70              'description' => $request->description
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/TechniciansServices.php:
+   27              'size' => $request->size,
+   28              'title' => $request->title,
+   29:             'price' => $request->price,
+   30              'category' => $request->category,
+   31              'description' => $request->description
+   ..
+   65              'size' => $request->size,
+   66              'title' => $request->title,
+   67:             'price' => $request->price,
+   68              'category' => $request->category,
+   69              'description' => $request->description
+
+/Users/fourellodeveloper/Desktop/mycasav2/app/Services/UsersServices.php:
+  149                  'user_id'        => $user->id,
+  150                  'branch_id'      => $request->get('branch_id',null),
+  151:                 'enterprize_id'  => $request->get('enterprize_id',null),
+  152                  'profile'        => $image
+  153              ]);
+
+/Users/fourellodeveloper/Desktop/mycasav2/database/migrations/2019_10_16_054445_create_enterprizes_table.php:
+    5  use Illuminate\Database\Migrations\Migration;
+    6
+    7: class CreateEnterprisesTable extends Migration
+    8  {
+    9      /**
+   ..
+   14      public function up()
+   15      {
+   16:         Schema::create('enterprizes', function (Blueprint $table) {
+   17              $table->bigIncrements('id');
+   18              $table->string('prefix')->nullable();
+   ..
+   30      public function down()
+   31      {
+   32:         Schema::dropIfExists('enterprizes');
+   33      }
+   34  }
+
+/Users/fourellodeveloper/Desktop/mycasav2/database/migrations/2019_10_16_093636_create_user_informations_table.php:
+   22              $table->unsignedBigInteger('user_id')->nullable()->index('user_informations_user_id_foreign');
+   23              $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
+   24:             $table->unsignedBigInteger('enterprize_id')->nullable()->index('user_informations_enterprize_id_foreign');
+   25:             $table->foreign('enterprize_id')->references('id')->on('enterprizes')->onDelete('SET NULL');
+   26              $table->unsignedBigInteger('branch_id')->nullable()->index('user_informations_branch_id_foreign');
+   27              $table->foreign('branch_id')->references('id')->on('branches')->onDelete('SET NULL');
+
+/Users/fourellodeveloper/Desktop/mycasav2/vendor/composer/autoload_classmap.php:
+   35      'App\\Models\\Booking' => $baseDir . '/app/Models/Booking.php',
+   36      'App\\Models\\Devices' => $baseDir . '/app/Models/Devices.php',
+   37:     'App\\Models\\Enterprise' => $baseDir . '/app/Models/Enterprise.php',
+   38      'App\\Models\\Faqs' => $baseDir . '/app/Models/Faqs.php',
+   39      'App\\Models\\Joborder' => $baseDir . '/app/Models/Joborder.php',
+
+/Users/fourellodeveloper/Desktop/mycasav2/vendor/composer/autoload_static.php:
+  613          'App\\Models\\Booking' => __DIR__ . '/../..' . '/app/Models/Booking.php',
+  614          'App\\Models\\Devices' => __DIR__ . '/../..' . '/app/Models/Devices.php',
+  615:         'App\\Models\\Enterprise' => __DIR__ . '/../..' . '/app/Models/Enterprise.php',
+  616          'App\\Models\\Faqs' => __DIR__ . '/../..' . '/app/Models/Faqs.php',
+  617          'App\\Models\\Joborder' => __DIR__ . '/../..' . '/app/Models/Joborder.php',
+
+/Users/fourellodeveloper/Desktop/mycasav2/vendor/fzaninotto/faker/src/Faker/Provider/en_US/Text.php:
+  537  (the position in which you usually see Shakespeare, in the pictures
+  538  of him), while the rest waited in silence. At last the Dodo said,
+  539: 'EVERYBODY has won, and all must have prizes.'
+  540
+  541: 'But who is to give the prizes?' quite a chorus of voices asked.
+  542
+  543  'Why, SHE, of course,' said the Dodo, pointing to Alice with one finger;
+  544  and the whole party at once crowded round her, calling out in a confused
+  545: way, 'Prizes! Prizes!'
+  546
+  547  Alice had no idea what to do, and in despair she put her hand in her
+  548  pocket, and pulled out a box of comfits, (luckily the salt water had
+  549: not got into it), and handed them round as prizes. There was exactly one
+  550  a-piece all round.
+  551
+  552: 'But she must have a prize herself, you know,' said the Mouse.
+  553
+  554  'Of course,' the Dodo replied very gravely. 'What else have you got in
+
+47 matches across 16 files
